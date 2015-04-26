@@ -1,4 +1,5 @@
 -- Scalar functions
+
 SELECT YEAR(SellStartDate) SellStartYear, ProductID, Name
 FROM SalesLT.Product
 ORDER BY SellStartYear;
