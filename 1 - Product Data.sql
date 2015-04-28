@@ -1,32 +1,28 @@
---Retrieve the nname and approximate weight of each product
-SELECT	ProductID,
-		UPPER(Name) AS ProductName,
-		ROUND(Weight, 0) AS ApproxWeight
-FROM SalesLT.Product;
+-- Retrieve product model descriptions
+SELECT P.ProductID, P.Name AS ProductName, PM.Name AS ProductModel, PM.Summary
+FROM SalesLT.Product AS P
+JOIN SalesLT.vProductModelCatalogDescription AS PM
+ON P.ProductModelID = PM.ProductModelID
+ORDER BY ProductID;
 
---Retrieve the month and year products were first sold
-SELECT	ProductID,
-		UPPER(Name) AS ProductName,
-		ROUND(Weight, 0) AS ApproxWeight,
-		YEAR(SellStartDate) as SellStartYear,
-		DATENAME(m, SellStartDate) as SellStartMonth
-FROM SalesLT.Product;
+-- Create a table of distinct colors
+DECLARE @colors AS TABLE (Color nvarchar(15));
 
--- Extract type from product number
-SELECT	ProductID,
-		UPPER(Name) AS ProductName,
-		ROUND(Weight, 0) AS ApproxWeight,
-		YEAR(SellStartDate) as SellStartYear,
-		DATENAME(m, SellStartDate) as SellStartMonth,
-		LEFT(ProductNumber, 2) AS ProductType
-FROM SalesLT.Product;
+INSERT INTO @Colors
+SELECT DISTINCT Color FROM SalesLT.Product;
 
--- Filter to include only products with numeric sizes
-SELECT	ProductID,
-		UPPER(Name) AS ProductName,
-		ROUND(Weight, 0) AS ApproxWeight,
-		YEAR(SellStartDate) as SellStartYear,
-		DATENAME(m, SellStartDate) as SellStartMonth,
-		LEFT(ProductNumber, 2) AS ProductType
+SELECT ProductID, Name, Color
 FROM SalesLT.Product
-WHERE ISNUMERIC(Size)=1;
+WHERE Color IN (SELECT Color FROM @Colors);
+
+
+-- Retrieve product parent categories from a function
+SELECT C.ParentProductCategoryName AS ParentCategory,
+       C.ProductCategoryName AS Category,
+       P.ProductID, P.Name AS ProductName
+FROM SalesLT.Product AS P
+JOIN dbo.ufnGetAllCategories() AS C
+ON P.ProductCategoryID = C.ProductCategoryID
+ORDER BY ParentCategory, Category, ProductName;
+
+
