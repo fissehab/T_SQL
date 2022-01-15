@@ -109,7 +109,7 @@ ORDER BY ProductCategoryID, ListPrice
 ORDER BY ProductCategoryID ASC, ListPrice DESC 
 ORDER BY ListPrice DESC
 
-Answer: 4
+Answer: 3
 
 7. You write the following Transact-SQL query to retrieve data from the Sales.SalesOrderHeader table:
 SELECT SalesOrderID, OrderDate, Amount
@@ -118,7 +118,6 @@ FROM Sales.SalesOrderHeader
 
 You want to limit the results to include only sales in the first calendar quarter of 2015. Which two of the following WHERE clauses can you use to accomplish this goal? (assume US formats for dates, for example 3/31/2015 represents March 31st 2015)
 
-WHERE OrderDate BETWEEN '1/1/2015' AND '3/31/2015'
 WHERE OrderDate BETWEEN '1/1/2015' AND '3/31/2015'
 WHERE OrderDate > '1/1/2015' AND OrderDate < '3/31/2015'
 WHERE OrderDate >= '1/1/2015' AND OrderDate <= '3/31/2015'
@@ -143,7 +142,7 @@ LEFT JOIN Inventory.Product AS p ON o.ProductID = p.ProductID;
 RIGHT JOIN Inventory.Product AS p ON o.ProductID = p.ProductID;
 CROSS JOIN Inventory.Product AS p;
 
-Answer: 4
+Answer: 3
 
 
 9.
@@ -268,7 +267,6 @@ Which of the following subqueries should you use to complete the query?
     (SELECT MAX(o.OrderDate)
     FROM Sales.SalesOrder AS o
     WHERE o.CustomerID = c.CustomerID)
--- Option 1 <div style="margin-bottom:0px;">    (SELECT MAX(o.OrderDate)</div> <div style="margin-bottom:0px;">    FROM Sales.SalesOrder AS o</div> <div style="margin-bottom:10px;">    WHERE o.CustomerID = c.CustomerID)</div> - correct
 -- Option 2
     (SELECT MAX(c.OrderDate)
     FROM Sales.SalesOrder AS c)
@@ -281,7 +279,7 @@ Which of the following subqueries should you use to complete the query?
     FROM Sales.Customer AS c)
 
 	
-Answer: 4
+Answer: 1
 
 15. 
 
@@ -296,15 +294,15 @@ SELECT * FROM @tab;
 
 When you execute the code, an error occurs. Which two of the following actions could you take to prevent the error?
 
-Modify the INSERT statement to:
+1. Modify the INSERT statement to:
 INSERT INTO @tab
 SELECT ProductID, InStock
 FROM Inventory.Product;
 
-Remove the GO command
+2. Remove the GO command
 
-Use a temporary table named #tab instead of the @tab variable
-Add a second GO command after the final SELECT statement
+3. Use a temporary table named #tab instead of the @tab variable
+4. Add a second GO command after the final SELECT statement
 
 Answer: 2,3
 
@@ -358,7 +356,6 @@ JOIN Sales.SalesOrder AS o ON o.CustomerID = c.CustomerID
 GROUP BY GROUPING SETS (CountryRegion, (CountryRegion, City), ())
 
 Which three of the following values does this query return?
-A grand total of revenue for all sales., A revenue total for each CountryRegion., A revenue total for each CountryRegion and City combination., - correct
 A grand total of revenue for all sales.
 A revenue total for each individual customer.
 A revenue total for each CountryRegion.
@@ -887,7 +884,7 @@ IF ERROR_NUMBER() > 50000
 
 THROW @@ERROR;
 
-Ans: 4
+Ans: 4?
 
 
 
